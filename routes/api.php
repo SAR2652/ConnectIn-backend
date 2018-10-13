@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/checkUserExistsandLogin', 'APIController@checkUserExistsandLogin');
+Route::post('/checkUserExistsandLogin', 'APIController@checkUserExistsandLogin');
