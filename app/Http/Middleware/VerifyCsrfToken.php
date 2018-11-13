@@ -18,7 +18,7 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
-    protected $except = [ "http://localhost/ConnectIn/public/api/checkUserExistsandLogin/*"
+    protected $except = [ "http://192.168.137.1/ConnectIn/public/api/checkUserExistsandLogin/*"
         //
     ];
 }

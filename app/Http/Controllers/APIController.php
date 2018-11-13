@@ -17,12 +17,15 @@ class APIController extends Controller
             $response = DB::table('tbl_users')->select('*')->where('email_address', $email)->get();
             return $response;
         }
-        else
+        /*
+        else 
         {
             $post = new UserData;
+            $post->email_address = $email;
             $post->first_name = $request->first_name;
             $post->last_name = $request->last_name;
-            $post->email_address = $request->email;
-        }
+            $post->save();
+            return $post;
+        }*/
     }
 }
