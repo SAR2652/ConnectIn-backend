@@ -18,7 +18,9 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
-    protected $except = [ "http://192.168.137.1/ConnectIn/public/api/checkUserExistsandLogin/*"
+    protected $except = [ "http://192.168.0.102/ConnectIn/public/api/googleSocialLogin/*",
+    "http://192.168.0.102/ConnectIn/public/api/facebookSocialLogin/*",
+    
         //
     ];
 }

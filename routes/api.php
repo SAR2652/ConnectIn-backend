@@ -17,5 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/checkUserExistsandLogin', 'APIController@checkUserExistsandLogin');
-Route::post('/checkUserExistsandLogin', 'APIController@checkUserExistsandLogin');
+Route::get('/googleSocialLogin', 'APIController@googleSocialLogin');
+Route::post('/googleSocialLogin', 'APIController@googleSocialLogin');
+
+
