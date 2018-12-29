@@ -17,7 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/googleSocialLogin', 'APIController@googleSocialLogin');
-Route::post('/googleSocialLogin', 'APIController@googleSocialLogin');
+Route::get('/socialLogin', 'APIController@socialLogin');
+Route::post('/socialLogin', 'APIController@socialLogin');
 
+Route::get('/getPackTournamentDetails', 'APIController@getPackTournamentDetails');
+Route::post('/getPackTournamentDetails', 'APIController@getPackTournamentDetails');
 
+Route::get('/createUserPack', 'APIController@createUserPack');
+Route::post('/createUserPack', 'APIController@createUserPack');
+
+Route::get('/getUserPackDetails', 'APIController@getUserPackDetails');
+Route::post('/getUserPackDetails', 'APIController@getUserPackDetails');

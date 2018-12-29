@@ -18,9 +18,10 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
-    protected $except = [ "http://192.168.0.102/ConnectIn/public/api/googleSocialLogin/*",
-    "http://192.168.0.102/ConnectIn/public/api/facebookSocialLogin/*",
-    
-        //
+    protected $except = [ "http://192.168.0.107/ConnectIn-backend/public/api/socialLogin/*",
+    "http://192.168.0.107/ConnectIn-backend/public/api/createUserPack/*",
+    "http://192.168.0.107/ConnectIn-backend/public/api/getUserPackDetails/*",
+    "http://192.168.0.107/ConnectIn-backend/public/api/getPackTournamentDetails/*",
+    "http://192.168.0.107/ConnectIn-backend/public/api/registerPackForTournament/*",
     ];
 }

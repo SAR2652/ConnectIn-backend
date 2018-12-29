@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\UserData;
+use App\Pack;
+use App\SavedPacks;
+use App\TournamentForPack;
 
 class APIController extends Controller
 {
@@ -21,25 +24,20 @@ class APIController extends Controller
         else 
         {
             $post = new UserData;
-
-            //generate password for
-            //Google Sign in
+            //generate password for both Google and Facebook
+            //login methods
+            $count = UserData::where('social_login_type', $request->social_login_type)->count();
+            $count++;
+            $count = (string)$count;
             if($request->social_login_type = 'g')
             {
-                $gsl_count = UserData::where('social_login_type','g')->count();
-                $gsl_count++;
-                $gsl_count = (string)$gsl_count;
-                $gsl_count = "google".$gsl_count; 
-                $post->password = md5($gsl_count);
-            }
+                $count = "google".$count; 
+            }           
             else
             {
-                $fsl_count = UserData::where('social_login_type','f')->count();
-                $fsl_count++;
-                $fsl_count = (string)$fsl_count;
-                $fsl_count = "facebook".$fsl_count; 
-                $post->password = md5($fsl_count);
+                $count = "facebook".$count; 
             }
+            $post->password = md5($count);
 
             $post->email_address = $email;
             $post->first_name = $request->first_name;
@@ -61,10 +59,53 @@ class APIController extends Controller
         }
     }
 
-    
-
-    public function retrieveProfile(Request $request)
+    //creates a pack for the user
+    public function createUserPack(Request $request)
     {
+        $email = $request->email;     
+        $response = json_decode(UserData::select('id')->where('email_address',$email)->get(), true);
         
+        $post = new Pack;    
+        $post->user_id = $response[0]["id"];
+        $post->amount = $request->amount;
+        $post->pack_markup = $request->markup;
+        $post->pack_name = $request->pack_name;
+        $post->ip_address = $request->ip_address;
+        $post->save();
+        
+        return "Saved";
+    }
+
+    //retrieves details of bookmarked packs
+    public function getSavedUserPacks(Request $request)
+    {
+        $email = $request->$email;
+        $user_id = json_decode(UserData::select('id')->where('email_address',$email)->get(), true);
+
+        $response = SavedPacks::select('*')->where('user_id', $user_id[0]["id"]); 
+    }
+
+    //returns details of user's currently present packs
+    public function getUserPackDetails(Request $request)
+    {
+        $email = $request->email;
+        $user_id = json_decode(UserData::select('id')->where('email_address',$email)->get(), true);
+
+        $response = json_decode(Pack::select('id','amount', 'amount_hold', 'amount_sold', 'max_stake', 'pack_name', 'pack_active', 'pack_markup', 'pack_percentage', 'expiry_date')->where('user_id', $user_id[0]["id"])->get(), true);
+
+        return $response;
+    }
+
+    //used by user to register a pack for a tournament
+    public function registerPackForTournament(Request $request)
+    {
+        //create function to get tournament id from tournament name
+        //when we get tournament entity table
+    }
+
+    //returns details of the tournament for the user
+    public function getPackTournamentDetails(Request $request)
+    {
+        return TournamentForPack::select('*')->where('pack_id', $request->pack_id)->get();
     }
 }
